@@ -12,7 +12,6 @@
             --red: #ff2a2a;
             --white: #fff;
             --gray: #9a9a9a;
-            /* Colores Frayarnavales para el logo */
             --blue: #00d2ff;
             --purple: #9d50bb;
         }
@@ -69,7 +68,7 @@
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* CONTENIDO */
+        /* SECCIONES */
         section { padding: 80px 20px; max-width: 1100px; margin: auto; position: relative; z-index: 10; }
 
         .big { font-size: clamp(3.5rem, 12vw, 7rem); line-height: 0.85; text-transform: uppercase; }
@@ -136,6 +135,10 @@
 </head>
 <body>
 
+    <audio id="sonido-temblor">
+        <source src="temblor.mp3" type="audio/mpeg">
+    </audio>
+
     <header class="header-nav">
         <h1 class="pawer-logo-text">PAWER</h1>
     </header>
@@ -195,6 +198,26 @@
     <section class="disclaimer">
         <p>Pawer no juzga. Observa.</p>
     </section>
+
+    <script>
+        function activarSonido() {
+            const sonido = document.getElementById('sonido-temblor');
+            
+            // Forzamos a que salte a los últimos 3 segundos
+            if (sonido.duration > 3) {
+                sonido.currentTime = sonido.duration - 3;
+            } else {
+                sonido.currentTime = 0; // Si es muy corto, que empiece de cero
+            }
+
+            sonido.play().catch(e => console.log("Interacción requerida"));
+            
+            // Eliminamos el detector para que solo suene al primer clic
+            document.removeEventListener('click', activarSonido);
+        }
+        
+        document.addEventListener('click', activarSonido);
+    </script>
 
 </body>
 </html>
